@@ -85,7 +85,7 @@ stages{
         steps{
             withEnv(["APP_NAME=${APP_NAME}", "PROJECT_NAME=${PROJECT_NAME}"]){
                 sh '''
-                docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-auth:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}_authapi  -f pyfln-auth/Dockerfile pyfln-auth/.
+                docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-auth:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}-auth  -f pyfln-auth/Dockerfile pyfln-auth/.
                 '''
             }   
         }

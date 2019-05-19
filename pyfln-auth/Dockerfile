@@ -36,8 +36,7 @@ USER root
 
 COPY files /tmp/
 
-RUN groupadd -g 10000 pyflnuser && \
-    useradd --no-log-init -u 10000 -g pyflnuser -ms /bin/bash pyflnuser
+RUN useradd --no-log-init -u 10000 -g 0 -ms /bin/bash pyflnuser
     # && echo '' >> /etc/resolv.conf && echo "nameserver 8.8.8.8" >> /etc/resolv.conf
     # rm /etc/yum.repos.d/Cen* && \
     # cp /tmp/centos.repo /etc/yum.repos.d/
@@ -51,11 +50,12 @@ RUN yum -y update && \
 
 COPY app ${APP_HOME}/
 
-RUN bash -c "cd ${APP_HOME} && python -m pip install -r requirements.txt"
+RUN bash -c "pip install --upgrade pip" \
+  && bash -c "cd ${APP_HOME} && pip install -r requirements.txt"
 
 RUN cp /tmp/uid_entrypoint ${APP_HOME}/ && \
   chmod -R 0777 ${APP_HOME} && \
-  chown -R pyflnuser:pyflnuser ${APP_HOME} && \
+  chown -R pyflnuser:root ${APP_HOME} && \
   chmod -R g=u /etc/passwd
 
 EXPOSE 8000
