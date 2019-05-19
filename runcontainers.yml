@@ -5,8 +5,7 @@
   vars:
     base_dir: "~/"
 
-- name: install docker-py
-  pip:
+- pip:
     name:
       - docker
       - docker-py
