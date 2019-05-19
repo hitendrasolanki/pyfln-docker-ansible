@@ -119,13 +119,17 @@ stages{
     stage('Deploy'){
         steps
         {
-            script{
-                // withCredentials([file(credentialsId: "${JENKINS_GCLOUD_CRED_ID}", variable: 'JENKINSGCLOUDCREDENTIAL')])
-                // {
-                    run_playbook('runcontainers.yaml')
-                    run_playbook('recreate_network.yaml')
-                // }
-            }
+            sh '''#!/bin/bash
+            ansible-playbook ${BASE_DIR}/runcontainers.yml
+            ansible-playbook ${BASE_DIR}/recreate_network.yml
+            '''
+            // script{
+            //     // withCredentials([file(credentialsId: "${JENKINS_GCLOUD_CRED_ID}", variable: 'JENKINSGCLOUDCREDENTIAL')])
+            //     // {
+            //         run_playbook('runcontainers.yml')
+            //         run_playbook('recreate_network.yml')
+            //     // }
+            // }
         }
     }
 }
