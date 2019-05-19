@@ -4,15 +4,15 @@ ARG APP_NAME=pyfln-ui
 ARG APP_BASE_DIR=/var/www/html
 ARG APP_BUILD_DIR=/opt/app-root/src/
 ARG API_ENDPOINT=http://127.0.0.1:8000
-ENV APP_BUILD_DIR $APP_BUILD_DIR
-ENV APP_BASE_DIR $APP_BASE_DIR
-ENV APP_NAME ${APP_NAME}
-ENV API_ENDPOINT ${API_ENDPOINT}
-ENV LD_LIBRARY_PATH /opt/rh/rh-nodejs8/root/usr/lib64
-ENV PATH /opt/rh/rh-nodejs8/root/usr/bin:/opt/app-root/src/node_modules/.bin/:/opt/app-root/src/.npm-global/bin/:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV NPM_CONFIG_PREFIX /opt/app-root/src/.npm-global
+ENV APP_BUILD_DIR=${APP_BUILD_DIR} \
+    APP_BASE_DIR=${APP_BASE_DIR} \
+    APP_NAME=${APP_NAME} \
+    API_ENDPOINT=${API_ENDPOINT} \
+    LD_LIBRARY_PATH=/opt/rh/rh-nodejs8/root/usr/lib64 \
+    PATH=/opt/rh/rh-nodejs8/root/usr/bin:/opt/app-root/src/node_modules/.bin/:/opt/app-root/src/.npm-global/bin/:/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    NPM_CONFIG_PREFIX=/opt/app-root/src/.npm-global
 
-EXPOSE 80
+EXPOSE 8080
 
 USER root
 
