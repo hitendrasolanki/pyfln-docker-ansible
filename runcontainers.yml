@@ -18,7 +18,7 @@
     - name: run mongodb in container
       docker_container:
         name: pyfln-mongodb
-        image: "mongodb:latest"
+        image: "mongo:4.0.9"
         state: started
         ports:
           - "27017:27017"
