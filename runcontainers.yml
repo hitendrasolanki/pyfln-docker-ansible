@@ -5,12 +5,6 @@
   vars:
     base_dir: "~/"
   tasks:
-    - pip:
-        name:
-          - docker
-          - docker-py
-
-
     # - name: build the images
     #   docker_image:
     #     name: "{{item}}"

@@ -5,11 +5,6 @@
   vars:
     base_dir: "~/"
   tasks:
-    - pip:
-        name:
-          - docker
-          - docker-py
-          
     - name: "Delete pyfln_network network, disconnecting all containers"
       docker_network:
         name: pyfln_network
