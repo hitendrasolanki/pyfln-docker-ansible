@@ -44,7 +44,9 @@ pipeline{
 environment {
     GIT_COMMIT_SHORT_HASH = sh (script: "git rev-parse --short HEAD", returnStdout: true)
 }
-
+options {
+      timeout(time: 7, unit: 'MINUTES') 
+    }
 agent any
 
 stages{
@@ -85,7 +87,8 @@ stages{
         steps{
             withEnv(["APP_NAME=${APP_NAME}", "PROJECT_NAME=${PROJECT_NAME}"]){
                 sh '''
-                docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-auth:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}-auth  -f pyfln-auth/Dockerfile pyfln-auth/.
+                docker build -t ${APP_NAME}-auth:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}-auth  -f pyfln-auth/Dockerfile pyfln-auth/.
+                docker tag ${APP_NAME}-auth:${RELEASE_TAG} ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-auth:${RELEASE_TAG}
                 '''
             }   
         }
@@ -94,7 +97,8 @@ stages{
         steps{
             withEnv(["APP_NAME=${APP_NAME}", "PROJECT_NAME=${PROJECT_NAME}"]){
                 sh '''
-                docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-ui:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}-ui  -f pyfln-ui/Dockerfile pyfln-ui/.
+                docker build -t ${APP_NAME}-ui:${RELEASE_TAG} --build-arg APP_NAME=${APP_NAME}-ui  -f pyfln-ui/Dockerfile pyfln-ui/.
+                docker tag ${APP_NAME}-ui:${RELEASE_TAG} ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}-ui:${RELEASE_TAG}
                 '''
             }   
         }
