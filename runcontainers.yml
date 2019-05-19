@@ -7,8 +7,9 @@
 
 - name: install docker-py
   pip:
-    name: docker-py
-    state: present
+    name:
+      - docker
+      - docker-py
 
 
 # - name: build the images
