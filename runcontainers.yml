@@ -5,15 +5,21 @@
   vars:
     base_dir: "~/"
 
-- name: build the images
-  docker_image:
-    name: "{{item}}"
-    tag: latest
-    path: "{{item}}"
+- name: install docker-py
+  pip:
+    name: docker-py
     state: present
-  with_items:
-    - pyfln-auth
-    - pyfln-ui
+
+
+# - name: build the images
+#   docker_image:
+#     name: "{{item}}"
+#     tag: latest
+#     path: "{{item}}"
+#     state: present
+#   with_items:
+#     - pyfln-auth
+#     - pyfln-ui
 
 - name: run mongodb in container
   docker:
