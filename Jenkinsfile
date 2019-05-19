@@ -120,7 +120,7 @@ stages{
         steps
         {
             sh '''#!/bin/bash -xe
-            ansible-playbook -vvv ${BASE_DIR}/runcontainers.yml \
+            ansible-playbook -vvv -e "IMAGE_RELEASE_TAG=${RELEASE_TAG}" ${BASE_DIR}/runcontainers.yml \
             && ansible-playbook -vvv ${BASE_DIR}/recreate_network.yml
             '''
             // script{

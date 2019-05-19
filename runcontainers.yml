@@ -4,6 +4,7 @@
   become: false
   vars:
     base_dir: "~/"
+    IMAGE_RELEASE_TAG: "1.0.0"
   tasks:
     # - name: build the images
     #   docker_image:
@@ -26,7 +27,7 @@
     - name: run pyfln-auth in a docker container
       docker_container:
         name: pyfln-auth
-        image: pyfln-auth:1.0.0
+        image: "pyfln-auth:{{IMAGE_RELEASE_TAG}}"
         volumes:
           - "/var/www/pyfln-auth/instance/app.cfg:/opt/app-root/var/app-instance/app.cfg"
         state: started
@@ -38,7 +39,7 @@
     - name: run pyfln-ui in a docker container
       docker_container:
         name: pyfln-ui
-        image: pyfln-ui:1.0.0
+        image: "pyfln-ui:{{IMAGE_RELEASE_TAG}}"
         state: started
         restart: yes
         env:
