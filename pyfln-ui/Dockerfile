@@ -47,7 +47,7 @@ RUN cd ${APP_BUILD_DIR} && rm package-lock.json || true \
 RUN cd $APP_BUILD_DIR/ \
     && npm --max_old_space_size=8000 run ng build --prod --verbose --source-map \
     && mkdir -p ${APP_BASE_DIR} \
-    && cp -r ${APP_BUILD_DIR}/dist/ ${APP_BASE_DIR}/ \
+    && mv ${APP_BUILD_DIR}/dist/* ${APP_BASE_DIR}/ \
     && cp ${APP_BUILD_DIR}/files/entrypoint.sh ${APP_BASE_DIR}/ \
     && chmod -R 0775 $APP_BASE_DIR/ \
     && chown -R apache:0 $APP_BASE_DIR/
