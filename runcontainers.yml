@@ -16,14 +16,14 @@
     #     - pyfln-ui
 
     - name: run mongodb in container
-      docker:
+      docker_container:
         name: pyfln-mongodb
         image: "mongodb:latest"
         state: reloaded
         publish_all_ports: yes
 
     - name: run the images in a docker container
-      docker:
+      docker_container:
         name: "{{item}}"
         image: "{{item}}:latest"
         state: reloaded

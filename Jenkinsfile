@@ -119,9 +119,9 @@ stages{
     stage('Deploy'){
         steps
         {
-            sh '''#!/bin/bash
-            ansible-playbook ${BASE_DIR}/runcontainers.yml
-            ansible-playbook ${BASE_DIR}/recreate_network.yml
+            sh '''#!/bin/bash -xe
+            ansible-playbook -vvv ${BASE_DIR}/runcontainers.yml \
+            && ansible-playbook -vvv ${BASE_DIR}/recreate_network.yml
             '''
             // script{
             //     // withCredentials([file(credentialsId: "${JENKINS_GCLOUD_CRED_ID}", variable: 'JENKINSGCLOUDCREDENTIAL')])
