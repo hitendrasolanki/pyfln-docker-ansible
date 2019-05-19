@@ -27,6 +27,8 @@
       docker_container:
         name: pyfln-auth
         image: pyfln-auth:1.0.0
+        volumes:
+          - "/var/www/pyfln-auth/instance:/opt/app-root/src/instance"
         state: started
         ports:
           - "8082:8000"
