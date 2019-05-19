@@ -30,6 +30,7 @@
         volumes:
           - "/var/www/pyfln-auth/instance/app.cfg:/opt/app-root/var/app-instance/app.cfg"
         state: started
+        restart: yes
         ports:
           - "8082:8000"
 
@@ -39,6 +40,7 @@
         name: pyfln-ui
         image: pyfln-ui:1.0.0
         state: started
+        restart: yes
         env:
           API_ENDPOINT: http://127.0.0.1:8082
         ports:
