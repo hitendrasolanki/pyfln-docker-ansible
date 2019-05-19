@@ -17,7 +17,7 @@ DEBUG = True
 
 blueprint = Blueprint('auth',__name__,url_prefix='/api/auth')
 api = Api(blueprint)
-ns = api.namespace('user',description='Simple Flask Ldap App')
+ns = api.namespace('user',description='Sample Flask Ldap App')
 
 login_model = api.model("loginmodel", {
     "username": fields.String("Username."),
