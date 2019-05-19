@@ -26,6 +26,7 @@ RUN yum install -y httpd httpd-tools
 
 RUN cp ${APP_BUILD_DIR}/files/npm/npmrc ~/.npmrc \
     && bash -c 'for f in /etc/httpd/conf/*.conf; do mv -- "$f" "${f%.conf}.bak"; done' \
+    && bash -c 'for f in /etc/httpd/conf.d/*.conf; do mv -- "$f" "${f%.conf}.bak"; done' \
     && cp ${APP_BUILD_DIR}/files/httpd/httpd.conf /etc/httpd/conf/ \
     && cp ${APP_BUILD_DIR}/files/httpd/default-site.conf /etc/httpd/conf.d/default-site.conf \
     && chown apache:0 /etc/httpd/conf/httpd.conf \
