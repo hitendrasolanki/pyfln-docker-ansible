@@ -103,28 +103,28 @@ stages{
             }   
         }
     }
-    stage('Publish'){
-        steps{
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${JENKINS_DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWD']])
-            {
-            sh """
-            #echo ${DOCKER_PASSWD} | docker login --username ${DOCKER_USERNAME} --password-stdin ${DOCKER_REGISTRY_URL} 
-            #docker push ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}_auth:${RELEASE_TAG}
-            #docker push ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}_ui:${RELEASE_TAG}
-            #docker logout
-            """
-            }
-        }
-    }
+    // stage('Publish'){
+    //     steps{
+    //         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${JENKINS_DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWD']])
+    //         {
+    //         sh """
+    //         #echo ${DOCKER_PASSWD} | docker login --username ${DOCKER_USERNAME} --password-stdin ${DOCKER_REGISTRY_URL} 
+    //         #docker push ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}_auth:${RELEASE_TAG}
+    //         #docker push ${DOCKER_REGISTRY_URL}/${DOCKER_PROJECT_NAMESPACE}/${APP_NAME}_ui:${RELEASE_TAG}
+    //         #docker logout
+    //         """
+    //         }
+    //     }
+    // }
     stage('Deploy'){
         steps
         {
             script{
-                withCredentials([file(credentialsId: "${JENKINS_GCLOUD_CRED_ID}", variable: 'JENKINSGCLOUDCREDENTIAL')])
-                {
+                // withCredentials([file(credentialsId: "${JENKINS_GCLOUD_CRED_ID}", variable: 'JENKINSGCLOUDCREDENTIAL')])
+                // {
                     run_playbook('runcontainers.yaml')
                     run_playbook('recreate_network.yaml')
-                }
+                // }
             }
         }
     }
