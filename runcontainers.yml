@@ -28,10 +28,8 @@
         name: pyfln-auth
         image: pyfln-auth:1.0.0
         state: started
-        env:
-          API_ENDPOINT: http://127.0.0.1:8082
         ports:
-          - "8081:80"
+          - "8082:8000"
 
       
     - name: run pyfln-ui in a docker container
@@ -39,5 +37,7 @@
         name: pyfln-ui
         image: pyfln-ui:1.0.0
         state: started
+        env:
+          API_ENDPOINT: http://127.0.0.1:8082
         ports:
-          - "8082:8000"
+          - "8081:80"
