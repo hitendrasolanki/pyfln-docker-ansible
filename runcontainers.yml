@@ -1,0 +1,34 @@
+---
+- hosts: datacenter_host
+  gather_facts: true
+  become: false
+  vars:
+    base_dir: "~/"
+
+- name: build the images
+  docker_image:
+    name: "{{item}}"
+    tag: latest
+    path: "{{item}}"
+    state: present
+  with_items:
+    - pyfln-auth
+    - pyfln-ui
+
+- name: run mongodb in container
+  docker:
+    name: pyfln-mongodb
+    image: "mongodb:latest"
+    state: reloaded
+    publish_all_ports: yes
+
+- name: run the images in a docker container
+  docker:
+    name: "{{item}}"
+    image: "{{item}}:latest"
+    state: reloaded
+    publish_all_ports: yes
+  with_items:
+    - pyfln-auth
+    - pyfln-ui
+      
