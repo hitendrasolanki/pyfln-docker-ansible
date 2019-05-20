@@ -64,10 +64,11 @@ export class IndexComponent implements OnInit {
     if (this.submitType === 'Save') {
       // Push registration model object into registration list.
       console.log(this.regModel);
-        this.httpService.post('/api/userinfo/userinfo', this.regModel ).subscribe(rsp => {
-          // this.registrations.push(rsp.json());
-          const itms = rsp.json();
-          this.regModel.id = resp.id;
+        this.httpService.post('/api/userinfo/userinfo', this.regModel )
+        .map(response => response.json())
+        .subscribe(rsp => {
+          // this.registrations.push(rsp.json())
+          this.regModel._id = rsp;
       });
       this.registrations.push(this.regModel);
     } else {

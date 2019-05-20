@@ -77,9 +77,9 @@ class Home(Resource):
             record_created = collection.insert(body)
 
             if isinstance(record_created, list):
-                return jsonify({'ids' : [str(v) for v in record_created]}), 201
+                return Response(jsonify([str(v) for v in record_created]), status=201, mimetype = 'application/json')
             else:
-                return jsonify({ 'id' : str(record_created)}), 201
+                return Response(jsonify(str(record_created)), status=201, mimetype = 'application/json')
         except:
             raise #return "", 500
 
@@ -96,7 +96,7 @@ class Home(Resource):
             records_updated = collection.update_one({"_id": ObjectId(id)}, body)
 
             if records_updated.modified_count > 0:
-                return "Updated {} items!".format(records_updated.modified_count), 200
+                return Response(jsonify("Updated {} items!".format(records_updated.modified_count)), status=200, mimetype = 'application/json')
             else:
                 return "", 404
         except:
@@ -111,7 +111,7 @@ class Home(Resource):
             q_params = utils.parse_q_params(request.query_string)
             delete_user = collection.delete_one({"_id": ObjectId(id)})
             if delete_user.deleted_count > 0 :
-                return "Deleted {} items!".format(delete_user.deleted_count), 204
+                return Response("Deleted {} items!".format(delete_user.deleted_count), status=204, mimetype = 'application/json')
             else:
                 return "", 404
         except:

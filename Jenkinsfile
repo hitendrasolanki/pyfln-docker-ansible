@@ -45,7 +45,7 @@ environment {
     GIT_COMMIT_SHORT_HASH = sh (script: "git rev-parse --short HEAD", returnStdout: true)
 }
 options {
-      timeout(time: 7, unit: 'MINUTES') 
+      timeout(time: 10, unit: 'MINUTES') 
     }
 agent any
 
