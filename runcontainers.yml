@@ -42,6 +42,6 @@
         state: started
         restart: yes
         env:
-          API_ENDPOINT: http://pyfln-auth:8000
+          API_ENDPOINT: http://pyfln-auth:8000/
         ports:
           - "8081:8080"
