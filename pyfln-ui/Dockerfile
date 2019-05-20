@@ -40,8 +40,8 @@ RUN cp ${APP_BUILD_DIR}/files/npm/npmrc ~/.npmrc \
 COPY . ${APP_BUILD_DIR}
 
 RUN cd ${APP_BUILD_DIR} && rm package-lock.json || true \
-    && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install -g npm@latest \
     && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install -g @angular/cli@1.6.8 \
+    && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install node-sass@4.12.0 \
     && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install --no-optional
 
 RUN cd $APP_BUILD_DIR/ \
