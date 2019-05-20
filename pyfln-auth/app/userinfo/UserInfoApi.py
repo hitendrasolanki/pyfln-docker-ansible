@@ -13,7 +13,7 @@ import flask_restplus
 from flask import Blueprint, request, abort, Response, jsonify, url_for, session
 from flask import current_app as app
 from flask_restplus import Api, Resource, fields, reqparse
-
+from DbHelper import DbHelper
 
 DEBUG = True
 
@@ -31,12 +31,9 @@ add_user_model = api.model("add_user_model", {
     "passwordHash": fields.String("passwordHash")
 })
 
-client = MongoClient('localhost',27017)
-db = client.test
-collection = db.registration
+
 
 utils = imp.load_source('*', './userinfo/utils.py')
-
 
 @ns.route("")
 @ns.route("/<id>")
@@ -47,17 +44,18 @@ class Home(Resource):
         Function to get the userinfos.
         """
         try:
+            dbhelper = DbHelper()
             q_params = utils.parse_q_params(request.query_string)
             if q_params:
                 query = {k: int(v) if isinstance(v, str) and v.isdigit() else v for k, v in q_params.items()}
-                records_fetched = collection.find(query)
+                records_fetched = dbhelper.collection.find(query)
                 if records_fetched.count() > 0:
                     return json_util.dumps(records_fetched)
                 else:
                     return "No Records found", 404
             else:
-                if collection.find().count > 0:
-                    return Response(dumps(collection.find()), mimetype='application/json')
+                if dbhelper.collection.find().count > 0:
+                    return Response(dumps(dbhelper.collection.find()), mimetype='application/json')
                 else:
                     return jsonify([])
         except:
@@ -69,12 +67,13 @@ class Home(Resource):
         Function to add new userinfo(s).
         """
         try:
+            dbhelper = DbHelper()
             try:
                 body = ast.literal_eval(json.dumps(request.get_json()))
             except:
                 return "", 400
 
-            record_created = collection.insert(body)
+            record_created = dbhelper.collection.insert(body)
 
             if isinstance(record_created, list):
                 return Response(jsonify([str(v) for v in record_created]), status=201, mimetype = 'application/json')
@@ -89,11 +88,12 @@ class Home(Resource):
         Function to update a userinfo.
         """
         try:
+            dbhelper = DbHelper()
             try:
                 body = ast.literal_eval(json.dumps(request.get_json()))
             except:
                 return "", 400
-            records_updated = collection.update_one({"_id": ObjectId(id)}, body)
+            records_updated = dbhelper.collection.update_one({"_id": ObjectId(id)}, body)
 
             if records_updated.modified_count > 0:
                 return Response(jsonify("Updated {} items!".format(records_updated.modified_count)), status=200, mimetype = 'application/json')
@@ -108,8 +108,9 @@ class Home(Resource):
         Function to delete a userinfo.
         """
         try:
+            dbhelper = DbHelper()
             q_params = utils.parse_q_params(request.query_string)
-            delete_user = collection.delete_one({"_id": ObjectId(id)})
+            delete_user = dbhelper.collection.delete_one({"_id": ObjectId(id)})
             if delete_user.deleted_count > 0 :
                 return Response("Deleted {} items!".format(delete_user.deleted_count), status=204, mimetype = 'application/json')
             else:
