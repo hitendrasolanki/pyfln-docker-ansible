@@ -42,7 +42,8 @@ COPY . ${APP_BUILD_DIR}
 RUN cd ${APP_BUILD_DIR} && rm package-lock.json || true \
     && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install -g npm@latest \
     && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install -g @angular/cli@1.6.8 \
-    && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install --unsafe-perm --force --no-optional
+    && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install -g node-sass@4.5.0 --force \
+    && npm --max_old_space_size=8000 --registry https://registry.npmjs.org/ install --no-optional
 
 RUN cd $APP_BUILD_DIR/ \
     && npm --max_old_space_size=8000 run ng build --prod --verbose --source-map \
