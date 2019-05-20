@@ -35,7 +35,6 @@
         ports:
           - "8082:8000"
 
-      
     - name: run pyfln-ui in a docker container
       docker_container:
         name: pyfln-ui
@@ -43,6 +42,6 @@
         state: started
         restart: yes
         env:
-          API_ENDPOINT: http://127.0.0.1:8082
+          API_ENDPOINT: http://pyfln-auth:8000
         ports:
           - "8081:8080"
