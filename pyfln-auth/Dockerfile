@@ -51,6 +51,7 @@ RUN yum -y update && \
 COPY app ${APP_HOME}/
 
 RUN bash -c "pip install --upgrade pip" \
+  && bash -c "pip install python-ldap==3.1.0" \
   && bash -c "cd ${APP_HOME} && pip install -r requirements.txt"
 
 RUN cp /tmp/uid_entrypoint ${APP_HOME}/ && \
