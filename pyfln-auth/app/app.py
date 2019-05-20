@@ -21,7 +21,7 @@ app.config.from_pyfile('app.cfg')
 
 config = configparser.ConfigParser
 
-api = Api(app, version='1.0', title='Simple Ldap App', description = 'Simple Flask Ldap App')
+api = Api(app, version='1.0', title='Flask demo app', description = 'Flask demo app')
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(vault_user_blueprint)
 app.register_blueprint(userinfo_blueprint)
